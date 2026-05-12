@@ -1,0 +1,4 @@
+(executable
+ (name main)
+ (public_name ducktility)
+ (libraries ducktility_lib))

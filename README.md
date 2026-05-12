@@ -51,9 +51,17 @@ eval $(opam env --switch=ducktility)
 
 ### 3. Install Project Libraries
 
-I need **Dune** to build the project:
+I need **Dune** (3.23.0 in my case) to build the project:
 
 ```bash
 opam install -y dune
 
+```
+
+### 4. Build and Run
+
+
+You can build and execute the metrics engine simulation directly through Dune with a single command:
+```bash
+dune exec ducktility
 ```
