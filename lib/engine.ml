@@ -15,29 +15,31 @@ module MakeMetricsEngine = functor (TW: Types.TIME_WINDOW) -> functor (A: Types.
         historical_log = [];
     }
 
-    let ingest state timestamp value = 
+    let ingest state timestamp value =
         match state.active_window with
-            | None -> 
-                    let new_win = TW.int2window_identifier timestamp in
+        | None ->
+                let new_win = TW.int2window_identifier timestamp in
+                let fresh_acc = A.init () in
+                {
+                    active_window = Some new_win;
+                    active_accumulator = A.ingest fresh_acc value;
+                    historical_log = state.historical_log;
+                }
+        | Some current_win ->
+                if TW.is_expired current_win timestamp then
+                    let finalized_summary = A.finalize state.active_accumulator in
+                    let updated_history = (current_win, finalized_summary) :: state.historical_log in
+                    let next_win = TW.int2window_identifier timestamp in
                     let fresh_acc = A.init () in
                     {
-                        active_window = Some new_win;
+                        active_window = Some next_win;
                         active_accumulator = A.ingest fresh_acc value;
-                        historical_log = state.historical_log;
+                        historical_log = updated_history;
                     }
-            | Some current_win ->
-                    if TW.is_expired current_win timestamp then
-                        let finalized_summary = A.finalize state.active_accumulator in
-                        let updated_history = (current_win, finalized_summary) :: state.historical_log in
-                        let next_win = TW.int2window_identifier timestamp in
-                        let fresh_acc = A.init () in
-                        {
-                            active_window = Some next_win;
-                            active_accumulator = A.ingest fresh_acc value;
-                            historical_log = updated_history;
-                        }
-                    else {
-                        state with active active.accumulator = A.ingest state.active_accumulator value;
+                else
+                    {
+                        state with 
+                        active_accumulator = A.ingest state.active_accumulator value;
                     }
 
     let history state = List.rev state.historical_log

@@ -6,7 +6,7 @@
   <img src="extra/duck_image.jpg" alt="Ducktility Mascot" width="250" height="300" />
 </div>
 
-**Ducktility** is a lightweight, high-performance, in-memory Time-Series Database (TSDB) metrics engine written in OCaml.
+**Ducktility** is a lightweight, high-performance, in-memory time-series database (TSDB) metrics engine written in OCaml.
 
 Ducktility decouples temporal window tracking and mathematical data aggregation from the core ingestion loop. By utilizing functors, the engine remains completely agnostic to how time is partitioned or how data is summarized, allowing anyone to plug in custom strategies at compile time without modifying the underlying systems logic.
 
