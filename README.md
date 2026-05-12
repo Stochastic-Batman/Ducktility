@@ -2,7 +2,9 @@
 
 [![OCaml](https://img.shields.io/badge/ocaml-5.4.1-orange.svg)](https://ocaml.org/releases/ocaml-5.4.html)
 
-<img src="extra/duck_image.jpg" alt="Ducktility Mascot" width="300"/>
+<div align="center">
+  <img src="extra/duck_image.jpg" alt="Ducktility Mascot" width="250"/>
+</div>
 
 **Ducktility** is a lightweight, high-performance, in-memory Time-Series Database (TSDB) metrics engine written in OCaml.
 
